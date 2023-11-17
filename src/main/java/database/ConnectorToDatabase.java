@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class ConnectorToDatabase {
     private Connection connection;
     private Statement statement;
-    private final String URL_TO_CONNECT = "jdbc:mysql://localhost:3306/schooldatabase";
+    private final String URL_TO_CONNECT = "jdbc:mysql://localhost:3306/bookdb";
     private final String USER = "root";
     private final String PASSWORD = "margo1339834";
     public ConnectorToDatabase(){
