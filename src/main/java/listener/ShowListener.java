@@ -16,12 +16,6 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 
 public class ShowListener implements ActionListener {
-    private int countBook = 0;
-    private int countGenre = 0;
-    private int countInformatiob = 0;
-    private int countBookGenre = 0;
-    private int countBookInformation = 0;
-    private int countAll = 0;
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame frame = new JFrame();
@@ -92,6 +86,51 @@ public class ShowListener implements ActionListener {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     dialog.add(scrollBook);
+                    dialog.pack();
+                }
+
+                if(comboBox.getSelectedItem().equals("Genre table")){
+                    if(scrollBook != null)
+                        dialog.remove(scrollBook);
+                    if(scrollGenre != null)
+                        dialog.remove(scrollGenre);
+                    if(scrollInformation != null)
+                        dialog.remove(scrollInformation);
+                    if(scrollBookGenre != null)
+                        dialog.remove(scrollBookGenre);
+                    if(scrollBookInformation != null)
+                        dialog.remove(scrollBookInformation);
+                    if(scrollAll != null)
+                        dialog.remove(scrollAll);
+                    DefaultTableModel model = new DefaultTableModel();
+                    String[] columnNames = {"Genre"};
+                    model.setColumnIdentifiers(columnNames);
+                    JTable table = new JTable();
+                    table.setModel(model);
+                    table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+                    table.setFillsViewportHeight(true);
+                    scrollGenre = new JScrollPane(table);
+                    scrollGenre.setHorizontalScrollBarPolicy(
+                            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                    scrollGenre.setVerticalScrollBarPolicy(
+                            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    //from = (String) c1.getSelectedItem();
+                    String genre = "";
+                    try {
+                        ResultSet rs = genreService.getAllDataGenre();
+                        int i = 0;
+                        if (rs.next()) {
+                            genre = rs.getString("genre");
+                            model.addRow(new Object[]{genre});
+                            i++;
+                        }
+                        if (i < 1) {
+                            JOptionPane.showMessageDialog(null, "No Record Found", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    dialog.add(scrollGenre);
                     dialog.pack();
                 }
             }
