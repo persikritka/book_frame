@@ -1,5 +1,6 @@
 import listener.DeleteListener;
 import listener.InsertListener;
+import listener.ShowListener;
 import listener.UpdateListener;
 
 import javax.swing.*;
@@ -13,6 +14,8 @@ public class Menu extends JFrame {
     private  JButton deleteButton = null;
     private JButton updateButton = null;
 
+    private JButton showButton = null;
+
     public Menu() {
         super("Системное меню");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -23,10 +26,12 @@ public class Menu extends JFrame {
         inputButton = new JButton("INSERT");
         deleteButton = new JButton("DELETE");
         updateButton = new JButton("UPDATE");
+        showButton = new JButton("SHOW");
 
         jPanel.add(inputButton);
         jPanel.add(deleteButton);
         jPanel.add(updateButton);
+        jPanel.add(showButton);
 
         InsertListener insertListener = new InsertListener();
         inputButton.addActionListener(insertListener);
@@ -36,6 +41,9 @@ public class Menu extends JFrame {
 
         UpdateListener updateListener = new UpdateListener();
         updateButton.addActionListener(updateListener);
+
+        ShowListener showListener = new ShowListener();
+        showButton.addActionListener(showListener);
 
         setJMenuBar(menuBar);
         setSize(300, 200);

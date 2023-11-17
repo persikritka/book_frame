@@ -11,4 +11,12 @@ public class Genre {
     public String getGenre() {
         return genre;
     }
+
+    public void setIdGenre(int idGenre) {
+        this.idGenre = idGenre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
 }

@@ -22,7 +22,7 @@ public class Book {
         return idGenre;
     }
 
-    private void setIdBook(int idBook) {
+    public void setIdBook(int idBook) {
         this.idBook = idBook;
     }
 
