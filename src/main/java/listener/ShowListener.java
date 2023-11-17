@@ -288,7 +288,7 @@ public class ShowListener implements ActionListener {
                     dialog.pack();
                 }
 
-                if(comboBox.getSelectedItem().equals("Book table")){
+                if(comboBox.getSelectedItem().equals("All tables")){
                     if(scrollBook != null)
                         dialog.remove(scrollBook);
                     if(scrollGenre != null)
@@ -302,30 +302,37 @@ public class ShowListener implements ActionListener {
                     if(scrollAll != null)
                         dialog.remove(scrollAll);
                     DefaultTableModel model = new DefaultTableModel();
-                    String[] columnNames = {"Title", "Author", "ID genre"};
+                    String[] columnNames = {"Title", "Author", "ID genre", "Genre", "ID book", "Cost", "Circulation"};
                     model.setColumnIdentifiers(columnNames);
                     JTable table = new JTable();
                     table.setModel(model);
                     table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
                     table.setFillsViewportHeight(true);
-                    scrollBook = new JScrollPane(table);
-                    scrollBook.setHorizontalScrollBarPolicy(
+                    scrollAll = new JScrollPane(table);
+                    scrollAll.setHorizontalScrollBarPolicy(
                             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                    scrollBook.setVerticalScrollBarPolicy(
+                    scrollAll.setVerticalScrollBarPolicy(
                             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                     //from = (String) c1.getSelectedItem();
                     String title = "";
                     String author = "";
                     int idGenre;
-
+                    String genre = "";
+                    int idBook;
+                    int cost;
+                    int circulation;
                     try {
-                        ResultSet rs = bookService.getAllDataBook();
+                        ResultSet rs = bookService.getAllData();
                         int i = 0;
                         if (rs.next()) {
                             title = rs.getString("title");
                             author = rs.getString("author");
                             idGenre = Integer.parseInt(rs.getString("id_genre"));
-                            model.addRow(new Object[]{title, author, idGenre});
+                            idBook = Integer.parseInt(rs.getString("id_book"));
+                            cost = Integer.parseInt(rs.getString("cost"));
+                            circulation = Integer.parseInt(rs.getString("circulation"));
+                            genre = rs.getString("genre");
+                            model.addRow(new Object[]{title, author, idGenre, genre, idBook, cost, circulation});
                             i++;
                         }
                         if (i < 1) {
@@ -334,7 +341,7 @@ public class ShowListener implements ActionListener {
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    dialog.add(scrollBook);
+                    dialog.add(scrollAll);
                     dialog.pack();
                 }
             }
