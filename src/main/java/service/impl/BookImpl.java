@@ -22,6 +22,33 @@ public class BookImpl implements BookService {
     }
 
     @Override
+    public ResultSet getAllDataBookGenre() {
+        try {
+            return connectorToDatabase.getStatement().executeQuery("SELECT title, author, genre FROM book INNER JOIN genre ON id_genre = genre.id");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public ResultSet getAllDataBookInformation() {
+        try {
+            return connectorToDatabase.getStatement().executeQuery("SELECT title, author, id_genre, id_book, cost, circulation FROM book INNER JOIN information ON book.id = id_book");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public ResultSet getAllData() {
+        try {
+            return connectorToDatabase.getStatement().executeQuery(" SELECT title, author, id_genre, genre, id_book, cost, circulation FROM book INNER JOIN genre ON id_genre = genre.id INNER JOIN information ON book.id = id_book");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void insert(String title, String author, int idGenre) throws SQLException {
         String str = "insert into book(title, author, id_genre) values("+"'"
                 + title + "'" + ","
