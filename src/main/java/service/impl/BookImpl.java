@@ -24,7 +24,7 @@ public class BookImpl implements BookService {
     @Override
     public ResultSet getAllDataBookGenre() {
         try {
-            return connectorToDatabase.getStatement().executeQuery("SELECT title, author, genre FROM book INNER JOIN genre ON id_genre = genre.id");
+            return connectorToDatabase.getStatement().executeQuery("SELECT title, author, id_genre, genre FROM book INNER JOIN genre ON id_genre = genre.id");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
