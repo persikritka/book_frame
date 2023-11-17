@@ -46,7 +46,8 @@ public class Menu extends JFrame {
         showButton.addActionListener(showListener);
 
         setJMenuBar(menuBar);
-        setSize(300, 200);
+        //setSize(300, 200);
+        pack();
         setVisible(true);
     }
 }
