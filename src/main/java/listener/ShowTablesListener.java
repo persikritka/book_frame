@@ -50,7 +50,7 @@ public class ShowTablesListener implements ActionListener {
                 if (scrollAll != null)
                     dialog.remove(scrollAll);
                 DefaultTableModel model = new DefaultTableModel();
-                String[] columnNames = {"Title", "Author"};
+                String[] columnNames = {"Title", "Author", };
                 model.setColumnIdentifiers(columnNames);
                 JTable table = new JTable();
                 table.setModel(model);
@@ -115,7 +115,7 @@ public class ShowTablesListener implements ActionListener {
                 try {
                     ResultSet rs = genreService.getAllDataGenre();
                     int i = 0;
-                    if (rs.next()) {
+                    while (rs.next()) {
                         genre = rs.getString("genre");
                         model.addRow(new Object[]{genre});
                         i++;
@@ -161,7 +161,7 @@ public class ShowTablesListener implements ActionListener {
                 try {
                     ResultSet rs = informationService.getAllDataInformation();
                     int i = 0;
-                    if (rs.next()) {
+                    while (rs.next()) {
                         idBook = Integer.parseInt(rs.getString("id_book"));
                         cost = Integer.parseInt(rs.getString("cost"));
                         circulation = Integer.parseInt(rs.getString("circulation"));
@@ -192,7 +192,7 @@ public class ShowTablesListener implements ActionListener {
                 if (scrollAll != null)
                     dialog.remove(scrollAll);
                 DefaultTableModel model = new DefaultTableModel();
-                String[] columnNames = {"Title", "Author", "ID genre", "Genre"};
+                String[] columnNames = {"Title", "Author", "Genre"};
                 model.setColumnIdentifiers(columnNames);
                 JTable table = new JTable();
                 table.setModel(model);
@@ -205,17 +205,15 @@ public class ShowTablesListener implements ActionListener {
                         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                 String title = "";
                 String author = "";
-                int idGenre;
                 String genre = "";
                 try {
                     ResultSet rs = bookService.getAllDataBookGenre();
                     int i = 0;
-                    if (rs.next()) {
+                    while (rs.next()) {
                         title = rs.getString("title");
                         author = rs.getString("author");
-                        idGenre = Integer.parseInt(rs.getString("id_genre"));
                         genre = rs.getString("genre");
-                        model.addRow(new Object[]{title, author, idGenre, genre});
+                        model.addRow(new Object[]{title, author, genre});
                         i++;
                     }
                     if (i < 1) {
@@ -242,7 +240,7 @@ public class ShowTablesListener implements ActionListener {
                 if (scrollAll != null)
                     dialog.remove(scrollAll);
                 DefaultTableModel model = new DefaultTableModel();
-                String[] columnNames = {"Title", "Author", "ID genre", "ID book", "Cost", "Circulation"};
+                String[] columnNames = {"Title", "Author", "Cost", "Circulation"};
                 model.setColumnIdentifiers(columnNames);
                 JTable table = new JTable();
                 table.setModel(model);
@@ -256,22 +254,18 @@ public class ShowTablesListener implements ActionListener {
                 //from = (String) c1.getSelectedItem();
                 String title = "";
                 String author = "";
-                int idGenre;
-                int idBook;
                 int cost;
                 int circulation;
 
                 try {
                     ResultSet rs = bookService.getAllDataBookInformation();
                     int i = 0;
-                    if (rs.next()) {
+                    while (rs.next()) {
                         title = rs.getString("title");
                         author = rs.getString("author");
-                        idGenre = Integer.parseInt(rs.getString("id_genre"));
-                        idBook = Integer.parseInt(rs.getString("id_book"));
                         cost = Integer.parseInt(rs.getString("cost"));
                         circulation = Integer.parseInt(rs.getString("circulation"));
-                        model.addRow(new Object[]{title, author, idGenre, idBook, cost, circulation});
+                        model.addRow(new Object[]{title, author, cost, circulation});
                         i++;
                     }
                     if (i < 1) {
@@ -298,7 +292,7 @@ public class ShowTablesListener implements ActionListener {
                 if (scrollAll != null)
                     dialog.remove(scrollAll);
                 DefaultTableModel model = new DefaultTableModel();
-                String[] columnNames = {"Title", "Author", "ID genre", "Genre", "ID book", "Cost", "Circulation"};
+                String[] columnNames = {"Title", "Author", "Genre", "Cost", "Circulation"};
                 model.setColumnIdentifiers(columnNames);
                 JTable table = new JTable();
                 table.setModel(model);
@@ -312,23 +306,19 @@ public class ShowTablesListener implements ActionListener {
                 //from = (String) c1.getSelectedItem();
                 String title = "";
                 String author = "";
-                int idGenre;
                 String genre = "";
-                int idBook;
                 int cost;
                 int circulation;
                 try {
                     ResultSet rs = bookService.getAllData();
                     int i = 0;
-                    if (rs.next()) {
+                    while (rs.next()) {
                         title = rs.getString("title");
                         author = rs.getString("author");
-                        idGenre = Integer.parseInt(rs.getString("id_genre"));
-                        idBook = Integer.parseInt(rs.getString("id_book"));
                         cost = Integer.parseInt(rs.getString("cost"));
                         circulation = Integer.parseInt(rs.getString("circulation"));
                         genre = rs.getString("genre");
-                        model.addRow(new Object[]{title, author, idGenre, genre, idBook, cost, circulation});
+                        model.addRow(new Object[]{title, author, genre, cost, circulation});
                         i++;
                     }
                     if (i < 1) {

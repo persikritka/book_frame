@@ -1,17 +1,29 @@
 package tables.newTable;
 
 import database.ConnectorToDatabase;
+import service.BookService;
+import service.GenreService;
+import service.InformationService;
+import service.impl.BookImpl;
+import service.impl.GenreImpl;
+import service.impl.InformationImpl;
 
 import java.sql.*;
 
 public class CreateNewTables {
     private Connection connection;
     private Statement statement;
+    private BookService bookService;
+    private GenreService genreService;
+    private InformationService informationService;
 
     public void create() {
         ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
         connection = connectorToDatabase.getConnection();
         statement = connectorToDatabase.getStatement();
+        bookService = new BookImpl();
+        genreService = new GenreImpl();
+        informationService = new InformationImpl();
         DatabaseMetaData md = null;
         try {
             md = connection.getMetaData();
@@ -28,7 +40,9 @@ public class CreateNewTables {
                     statement = connection.createStatement();
                     //The next line has the issue
                     statement.executeUpdate(myTableName);
-                    System.out.println("Table Created");
+                    bookService.insert("Master and Margarita", "Bulgakov", 1);
+                    bookService.insert("Idiot", "Dostoevskiy", 1);
+                    bookService.insert("Lirika", "Pasternak", 2);
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 }
@@ -41,7 +55,8 @@ public class CreateNewTables {
                     statement = connection.createStatement();
                     //The next line has the issue
                     statement.executeUpdate(myTableName);
-                    System.out.println("Table Created");
+                    genreService.insert("Roman");
+                    genreService.insert("Poezia");
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 }
@@ -56,7 +71,9 @@ public class CreateNewTables {
                     statement = connection.createStatement();
                     //The next line has the issue
                     statement.executeUpdate(myTableName);
-                    System.out.println("Table Created");
+                    informationService.insert(1, 35, 100);
+                    informationService.insert(2, 20, 300);
+                    informationService.insert(3, 40, 200);
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 }
