@@ -1,43 +1,106 @@
 package listener;
 
+import service.BookService;
+import service.GenreService;
+import service.impl.BookImpl;
+import service.impl.GenreImpl;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UpdateListener implements ActionListener {
+    private JTable jTable;
+    private JPanel panel;
+    private JButton insertButton;
+    private JButton updateTableButton;
+    private JButton showButton;
+    public UpdateListener(JTable jTable, JPanel panel, JButton insertButton, JButton updateTableButton, JButton showButton) {
+        this.jTable = jTable;
+        this.panel = panel;
+        this.insertButton = insertButton;
+        this.updateTableButton = updateTableButton;
+        this.showButton = showButton;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame frame = new JFrame();
         JDialog dialog = new JDialog(frame, true);
         GridLayout grid = new GridLayout(6, 2, 5, 12);
         dialog.setLayout(grid);
+
         JLabel titleLabel = new JLabel("Title");
-        JTextField titleField = new JTextField(10);
+        String title = jTable.getValueAt(jTable.getSelectedRow(), 0).toString();
+        JTextField titleField = new JTextField(title, 10);
         dialog.add(titleLabel);
         dialog.add(titleField);
 
         JLabel authorLabel = new JLabel("Author");
-        JTextField authorField = new JTextField(10);
-
+        String author = jTable.getValueAt(jTable.getSelectedRow(), 1).toString();
+        JTextField authorField = new JTextField(author, 10);
         dialog.add(authorLabel);
         dialog.add(authorField);
 
+        GenreService genreService = new GenreImpl();
+        BookService bookService = new BookImpl();
+
         JLabel idGenreLabel = new JLabel("ID genre");
-        JTextField idGenreField = new JTextField(10);
+        String genre = jTable.getValueAt(jTable.getSelectedRow(), 2).toString();
+        int idGenreInt = 0;
+        String idGenreStr = null;
+        try {
+            ResultSet idGenreRS = genreService.getGenre(genre);
+            if(idGenreRS.next())
+                idGenreStr = idGenreRS.getString("id");
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        JTextField idGenreField = new JTextField(idGenreStr,10);
         dialog.add(idGenreLabel);
         dialog.add(idGenreField);
 
         JLabel costLabel = new JLabel("Cost");
-        JTextField costField = new JTextField(10);
+        String cost = jTable.getValueAt(jTable.getSelectedRow(), 3).toString();
+        JTextField costField = new JTextField(cost, 10);
         dialog.add(costLabel);
         dialog.add(costField);
 
         JLabel circulationLabel = new JLabel("Circulation");
-        JTextField circulationField = new JTextField(10);
+        String circulation = jTable.getValueAt(jTable.getSelectedRow(), 4).toString();
+        JTextField circulationField = new JTextField(circulation,10);
         dialog.add(circulationLabel);
         dialog.add(circulationField);
 
         JButton btn = new JButton("OK");
+
+        btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String title = titleField.getText();
+                String author = authorField.getText();
+                int cost = Integer.parseInt(costField.getText());
+                int circulation = Integer.parseInt(circulationField.getText());
+                int idGenre = Integer.parseInt(idGenreField.getText());
+                try {
+                    bookService.insert(title, author, idGenre);
+                    ResultSet rs = bookService.getID(title);
+                    int idBook = 0;
+                    if(rs.next())
+                        idBook = Integer.parseInt(rs.getString("id"));
+                    informationService.insert(idBook, cost, circulation);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                dialog.setVisible(false);
+            }
+        });
+
+        dialog.add(btn);
+        dialog.pack();
+        dialog.setTitle("Dialog Window");
+        dialog.setVisible(true);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 }

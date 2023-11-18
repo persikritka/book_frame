@@ -21,6 +21,12 @@ public class GenreImpl implements GenreService {
     }
 
     @Override
+    public ResultSet getGenre(String genre) throws SQLException {
+        ResultSet idGenre = connectorToDatabase.getStatement().executeQuery("SELECT id FROM genre WHERE genre = '" + genre + "'");
+        return idGenre;
+    }
+
+    @Override
     public void insert(String genre) throws SQLException {
         String str = "insert into genre(genre) values("+"'"
                 + genre + "'" + ")";

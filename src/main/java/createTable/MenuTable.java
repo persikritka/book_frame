@@ -71,7 +71,7 @@ public class MenuTable extends JTable{
         popupMenu.add(updateItem);
         DeleteListener deleteListener = new DeleteListener(table, panel, insertButton, showButton, updateTableButton);
         deleteItem.addActionListener(deleteListener);
-        UpdateListener updateListener = new UpdateListener();
+        UpdateListener updateListener = new UpdateListener(table, panel, insertButton, showButton, updateTableButton);
         updateItem.addActionListener(updateListener);
         table.setComponentPopupMenu(popupMenu);
         //setVisible(true);
