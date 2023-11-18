@@ -2,6 +2,7 @@ package createTable;
 
 import database.ConnectorToDatabase;
 import listener.DeleteListener;
+import listener.UpdateListener;
 import service.BookService;
 import service.impl.BookImpl;
 
@@ -65,9 +66,13 @@ public class MenuTable extends JTable{
 
         final JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
+        JMenuItem updateItem = new JMenuItem("Update");
         popupMenu.add(deleteItem);
+        popupMenu.add(updateItem);
         DeleteListener deleteListener = new DeleteListener(table, panel, insertButton, showButton, updateTableButton);
         deleteItem.addActionListener(deleteListener);
+        UpdateListener updateListener = new UpdateListener();
+        updateItem.addActionListener(updateListener);
         table.setComponentPopupMenu(popupMenu);
         //setVisible(true);
     }
