@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -19,6 +20,7 @@ public class Menu extends JFrame {
     private JPanel jPanel = null;
     private JButton inputButton = null;
     private JButton showButton = null;
+    private JButton updateTableJButton = null;
 
     public Menu() throws SQLException {
         super("Системное меню");
@@ -30,9 +32,11 @@ public class Menu extends JFrame {
         frame.add(jPanel);
         inputButton = new JButton("INSERT");
         showButton = new JButton("SHOW");
+        updateTableJButton = new JButton("UPDATE TABLE");
 
         jPanel.add(inputButton);
         jPanel.add(showButton);
+        jPanel.add(updateTableJButton);
 
         InsertListener insertListener = new InsertListener();
         inputButton.addActionListener(insertListener);
@@ -40,48 +44,8 @@ public class Menu extends JFrame {
         ShowListener showListener = new ShowListener();
         showButton.addActionListener(showListener);
 
-       // MenuTable menuTable = new MenuTable();
-       // jPanel.add(menuTable);
-
-        ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
-        BookService bookService = new BookImpl();
-        DefaultTableModel model = new DefaultTableModel();
-        String[] columnNames = {"Title", "Author"};
-        model.setColumnIdentifiers(columnNames);
-        JTable table = new JTable();
-        table.setModel(model);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        table.setFillsViewportHeight(true);
-        JScrollPane scrollBook = new JScrollPane(table);
-        scrollBook.setHorizontalScrollBarPolicy(
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollBook.setVerticalScrollBarPolicy(
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        //from = (String) c1.getSelectedItem();
-        String title = "";
-        String author = "";
-        String genre;
-        int cost;
-        int circulation;
-        try {
-            ResultSet rs = bookService.getAllData();
-            int i = 0;
-            while (rs.next()) {
-                title = rs.getString("title");
-                author = rs.getString("author");
-                genre = rs.getString("genre");
-                cost = Integer.parseInt(rs.getString("cost"));
-                circulation = Integer.parseInt(rs.getString("circulation"));
-                model.addRow(new Object[]{title, author, genre, cost, circulation});
-                i++;
-            }
-            if (i < 1) {
-                JOptionPane.showMessageDialog(null, "No Record Found", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        jPanel.add(scrollBook);
+        MenuTable menuTable = new MenuTable(jPanel);
+        jPanel.add(menuTable);
 
         frame.setJMenuBar(menuBar);
         frame.pack();

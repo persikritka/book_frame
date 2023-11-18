@@ -11,14 +11,15 @@ import java.sql.SQLException;
 
 public class MenuTable extends JTable{
     private BookService bookService;
-    public MenuTable() throws SQLException {
+    private JPanel panel;
+    public MenuTable(JPanel panel) throws SQLException {
         super();
-
+        this.panel = panel;
         ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
         bookService = new BookImpl();
 
         DefaultTableModel model = new DefaultTableModel();
-        String[] columnNames = {"Title", "Author"};
+        String[] columnNames = {"Title", "Author", "Genre", "Cost", "Circulation"};
         model.setColumnIdentifiers(columnNames);
         JTable table = new JTable();
         table.setModel(model);
@@ -29,18 +30,22 @@ public class MenuTable extends JTable{
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollBook.setVerticalScrollBarPolicy(
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        //from = (String) c1.getSelectedItem();
         String title = "";
         String author = "";
-        int idGenre;
+        String genre;
+        int cost;
+        int circulation;
 
         try {
-            ResultSet rs = bookService.getAllDataBook();
+            ResultSet rs = bookService.getAllData();
             int i = 0;
-            if (rs.next()) {
+            while (rs.next()) {
                 title = rs.getString("title");
                 author = rs.getString("author");
-                model.addRow(new Object[]{title, author});
+                genre = rs.getString("genre");
+                cost = Integer.parseInt(rs.getString("cost"));
+                circulation = Integer.parseInt(rs.getString("circulation"));
+                model.addRow(new Object[]{title, author, genre, cost, circulation});
                 i++;
             }
             if (i < 1) {
@@ -49,8 +54,8 @@ public class MenuTable extends JTable{
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        add(scrollBook);
-        setVisible(true);
+        panel.add(scrollBook);
+        //setVisible(true);
     }
 
 }

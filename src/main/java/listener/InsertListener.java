@@ -19,8 +19,6 @@ public class InsertListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
-        CreateNewTables createNewTables = new CreateNewTables();
-        createNewTables.create();
 
         JFrame frame = new JFrame();
         JDialog dialog = new JDialog(frame, true);
@@ -53,6 +51,9 @@ public class InsertListener implements ActionListener {
         dialog.add(circulationField);
 
         JButton btn = new JButton("OK");
+
+        CreateNewTables createNewTables = new CreateNewTables();
+        createNewTables.create();
 
         BookService bookService = new BookImpl();
         InformationService informationService = new InformationImpl();
