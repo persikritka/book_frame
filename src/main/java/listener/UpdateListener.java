@@ -1,9 +1,12 @@
 package listener;
 
+import createTable.MenuTable;
 import service.BookService;
 import service.GenreService;
+import service.InformationService;
 import service.impl.BookImpl;
 import service.impl.GenreImpl;
+import service.impl.InformationImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,6 +49,7 @@ public class UpdateListener implements ActionListener {
 
         GenreService genreService = new GenreImpl();
         BookService bookService = new BookImpl();
+        InformationService informationService = new InformationImpl();
 
         JLabel idGenreLabel = new JLabel("ID genre");
         String genre = jTable.getValueAt(jTable.getSelectedRow(), 2).toString();
@@ -83,19 +87,38 @@ public class UpdateListener implements ActionListener {
                 int cost = Integer.parseInt(costField.getText());
                 int circulation = Integer.parseInt(circulationField.getText());
                 int idGenre = Integer.parseInt(idGenreField.getText());
+
                 try {
-                    bookService.insert(title, author, idGenre);
                     ResultSet rs = bookService.getID(title);
                     int idBook = 0;
                     if(rs.next())
                         idBook = Integer.parseInt(rs.getString("id"));
-                    informationService.insert(idBook, cost, circulation);
+                    bookService.update(idBook, title, author, idGenre);
+                    ResultSet resultSet = informationService.getID(idBook);
+                    int idInformation = 0;
+                    if(resultSet.next())
+                        idInformation = Integer.parseInt(resultSet.getString("id"));
+                    informationService.update(idInformation, idBook, cost, circulation);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+
+                panel.removeAll();
+                panel.add(insertButton);
+                panel.add(updateTableButton);
+                panel.add(showButton);
+                MenuTable menuTable = null;
+                try {
+                    menuTable = new MenuTable(panel, insertButton, showButton, updateTableButton);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                panel.add(menuTable);
                 dialog.setVisible(false);
             }
         });
+
+
 
         dialog.add(btn);
         dialog.pack();

@@ -35,7 +35,7 @@ public class Menu extends JFrame {
         jPanel.add(showButton);
         jPanel.add(updateTableJButton);
 
-        InsertListener insertListener = new InsertListener();
+        InsertListener insertListener = new InsertListener(jPanel, inputButton, showButton, updateTableJButton);
         inputButton.addActionListener(insertListener);
 
         ShowListener showListener = new ShowListener();

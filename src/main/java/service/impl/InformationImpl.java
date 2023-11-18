@@ -21,6 +21,12 @@ public class InformationImpl implements InformationService {
     }
 
     @Override
+    public ResultSet getID(int idBook) throws SQLException {
+        ResultSet id = connectorToDatabase.getStatement().executeQuery("SELECT id FROM information WHERE id_book = '" + idBook + "'");
+        return id;
+    }
+
+    @Override
     public void insert(int idBook, int cost, int circulation) throws SQLException {
         String str = "insert into information(id_book, cost, circulation) values("+"'"
                 + idBook + "'" + ","

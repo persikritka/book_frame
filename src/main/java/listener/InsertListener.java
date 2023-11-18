@@ -1,5 +1,6 @@
 package listener;
 
+import createTable.MenuTable;
 import database.ConnectorToDatabase;
 import service.BookService;
 import service.InformationService;
@@ -16,6 +17,16 @@ import java.sql.*;
 public class InsertListener implements ActionListener {
     private Connection connection;
     private Statement statement;
+    private JPanel panel;
+    private JButton insertButton;
+    private JButton updateTableButton;
+    private JButton showButton;
+    public InsertListener(JPanel panel, JButton insertButton, JButton updateTableButton, JButton showButton) {
+        this.panel = panel;
+        this.insertButton = insertButton;
+        this.updateTableButton = updateTableButton;
+        this.showButton = showButton;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
@@ -74,6 +85,17 @@ public class InsertListener implements ActionListener {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+                panel.removeAll();
+                panel.add(insertButton);
+                panel.add(updateTableButton);
+                panel.add(showButton);
+                MenuTable menuTable = null;
+                try {
+                    menuTable = new MenuTable(panel, insertButton, showButton, updateTableButton);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                panel.add(menuTable);
                 dialog.setVisible(false);
             }
         });
