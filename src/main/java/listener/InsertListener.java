@@ -3,32 +3,23 @@ package listener;
 import database.ConnectorToDatabase;
 import service.BookService;
 import service.impl.BookImpl;
+import tables.newTable.CreateNewTables;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class InsertListener implements ActionListener {
     private Connection connection;
+    private Statement statement;
     @Override
     public void actionPerformed(ActionEvent e) {
         ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
-        connection = connectorToDatabase.getConnection();
-        DatabaseMetaData md = null;
-        try {
-            md = connection.getMetaData();
-        ResultSet rs = md.getTables(null, null, "book", null);
-        while (rs.next()) {
-            System.out.println(rs.getString(3));
-            }
-        }catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
+        CreateNewTables createNewTables = new CreateNewTables();
+        createNewTables.create();
+
         JFrame frame = new JFrame();
         JDialog dialog = new JDialog(frame, true);
         GridLayout grid = new GridLayout(6, 2, 5, 12);
