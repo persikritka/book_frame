@@ -38,7 +38,6 @@ public class CreateNewTables {
                         + "id_genre INT)";
                 try {
                     statement = connection.createStatement();
-                    //The next line has the issue
                     statement.executeUpdate(myTableName);
                     bookService.insert("Master and Margarita", "Bulgakov", 1);
                     bookService.insert("Idiot", "Dostoevskiy", 1);
@@ -53,7 +52,6 @@ public class CreateNewTables {
                         + "genre VARCHAR(20))";
                 try {
                     statement = connection.createStatement();
-                    //The next line has the issue
                     statement.executeUpdate(myTableName);
                     genreService.insert("Roman");
                     genreService.insert("Poezia");
@@ -66,10 +64,10 @@ public class CreateNewTables {
                         + "id INT PRIMARY KEY AUTO_INCREMENT,"
                         + "id_book INT,"
                         + "cost INT,"
-                        + "circulation INT)";
+                        + "circulation INT,"
+                        +"FOREIGN KEY(id_book) REFERENCES book(id))";
                 try {
                     statement = connection.createStatement();
-                    //The next line has the issue
                     statement.executeUpdate(myTableName);
                     informationService.insert(1, 35, 100);
                     informationService.insert(2, 20, 300);

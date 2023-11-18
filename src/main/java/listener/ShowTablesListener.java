@@ -50,7 +50,7 @@ public class ShowTablesListener implements ActionListener {
                 if (scrollAll != null)
                     dialog.remove(scrollAll);
                 DefaultTableModel model = new DefaultTableModel();
-                String[] columnNames = {"Title", "Author", };
+                String[] columnNames = {"Title", "Author"};
                 model.setColumnIdentifiers(columnNames);
                 JTable table = new JTable();
                 table.setModel(model);
@@ -61,7 +61,6 @@ public class ShowTablesListener implements ActionListener {
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 scrollBook.setVerticalScrollBarPolicy(
                         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                //from = (String) c1.getSelectedItem();
                 String title = "";
                 String author = "";
                 int idGenre;

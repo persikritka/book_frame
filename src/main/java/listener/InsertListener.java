@@ -2,7 +2,9 @@ package listener;
 
 import database.ConnectorToDatabase;
 import service.BookService;
+import service.InformationService;
 import service.impl.BookImpl;
+import service.impl.InformationImpl;
 import tables.newTable.CreateNewTables;
 
 import javax.swing.*;
@@ -53,7 +55,7 @@ public class InsertListener implements ActionListener {
         JButton btn = new JButton("OK");
 
         BookService bookService = new BookImpl();
-
+        InformationService informationService = new InformationImpl();
         btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String title = titleField.getText();
@@ -63,6 +65,11 @@ public class InsertListener implements ActionListener {
                 int idGenre = Integer.parseInt(idGenreField.getText());
                 try {
                     bookService.insert(title, author, idGenre);
+                    ResultSet rs = bookService.getID(title);
+                    int idBook = 0;
+                    if(rs.next())
+                        idBook = Integer.parseInt(rs.getString("id"));
+                    informationService.insert(idBook, cost, circulation);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
