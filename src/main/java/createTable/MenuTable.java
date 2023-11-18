@@ -1,6 +1,7 @@
 package createTable;
 
 import database.ConnectorToDatabase;
+import listener.DeleteListener;
 import service.BookService;
 import service.impl.BookImpl;
 
@@ -8,14 +9,20 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class MenuTable extends JTable{
     private BookService bookService;
     private JPanel panel;
-    public MenuTable(JPanel panel) throws SQLException {
+    private JButton insertButton;
+    private JButton updateTableButton;
+    private JButton showButton;
+    public MenuTable(JPanel panel, JButton insertButton, JButton updateTableButton, JButton showButton) throws SQLException {
         super();
         this.panel = panel;
-        //ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
+        this.insertButton = insertButton;
+        this.updateTableButton = updateTableButton;
+        this.showButton = showButton;
         bookService = new BookImpl();
 
         DefaultTableModel model = new DefaultTableModel();
@@ -55,6 +62,13 @@ public class MenuTable extends JTable{
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         panel.add(scrollBook);
+
+        final JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem deleteItem = new JMenuItem("Delete");
+        popupMenu.add(deleteItem);
+        DeleteListener deleteListener = new DeleteListener(table, panel, insertButton, showButton, updateTableButton);
+        deleteItem.addActionListener(deleteListener);
+        table.setComponentPopupMenu(popupMenu);
         //setVisible(true);
     }
 

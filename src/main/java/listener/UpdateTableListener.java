@@ -25,7 +25,7 @@ public class UpdateTableListener implements ActionListener {
             panel.add(insertButton);
             panel.add(updateTableButton);
             panel.add(showButton);
-            MenuTable menuTable = new MenuTable(panel);
+            MenuTable menuTable = new MenuTable(panel, insertButton, showButton, updateTableButton);
             panel.add(menuTable);
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

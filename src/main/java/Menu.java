@@ -41,7 +41,7 @@ public class Menu extends JFrame {
         ShowListener showListener = new ShowListener();
         showButton.addActionListener(showListener);
 
-        MenuTable menuTable = new MenuTable(jPanel);
+        MenuTable menuTable = new MenuTable(jPanel, inputButton, showButton, updateTableJButton);
         jPanel.add(menuTable);
         UpdateTableListener updateTableListener = new UpdateTableListener(jPanel, inputButton, showButton, updateTableJButton);
         updateTableJButton.addActionListener(updateTableListener);

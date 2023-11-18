@@ -67,7 +67,7 @@ public class CreateNewTables {
                         + "id_book INT,"
                         + "cost INT,"
                         + "circulation INT,"
-                        +"FOREIGN KEY(id_book) REFERENCES book(id))";
+                        +"FOREIGN KEY(id_book) REFERENCES book(id) ON DELETE CASCADE)";
                 try {
                     statement = connection.createStatement();
                     statement.executeUpdate(myTableName);

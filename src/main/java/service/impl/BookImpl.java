@@ -66,7 +66,7 @@ public class BookImpl implements BookService {
 
     @Override
     public void delete(int idBook) throws SQLException {
-        connectorToDatabase.getStatement().executeUpdate("delete from information where id = '" + idBook +"'");
+        connectorToDatabase.getStatement().executeUpdate("delete from book where id = '" + idBook +"'");
     }
 
     @Override
