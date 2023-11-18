@@ -30,7 +30,8 @@ public class ShowListener implements ActionListener {
         BookService bookService = new BookImpl();
         GenreService genreService = new GenreImpl();
         InformationService informationService = new InformationImpl();
-        ActionListener showTableListener = new ActionListener() {
+        ShowTablesListener showTablesListener = new ShowTablesListener(comboBox, items, dialog);
+       /* ActionListener showTableListener = new ActionListener() {
             JScrollPane scrollBook;
             JScrollPane scrollGenre;
             JScrollPane scrollInformation;
@@ -345,9 +346,9 @@ public class ShowListener implements ActionListener {
                     dialog.pack();
                 }
             }
-        };
+        };*/
 
-        comboBox.addActionListener(showTableListener);
+        comboBox.addActionListener(showTablesListener);
 
 
         dialog.pack();

@@ -1,3 +1,4 @@
+import createTable.MenuTable;
 import listener.DeleteListener;
 import listener.InsertListener;
 import listener.ShowListener;
@@ -7,47 +8,40 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class Menu extends JFrame {
     private JPanel jPanel = null;
     private JButton inputButton = null;
-    private  JButton deleteButton = null;
-    private JButton updateButton = null;
-
     private JButton showButton = null;
 
-    public Menu() {
+    public Menu() throws SQLException {
         super("Системное меню");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         setLayout(new FlowLayout(FlowLayout.LEFT));
         JMenuBar menuBar = new JMenuBar();
+        JFrame frame = new JFrame();
         jPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        add(jPanel);
+        frame.add(jPanel);
         inputButton = new JButton("INSERT");
-        deleteButton = new JButton("DELETE");
-        updateButton = new JButton("UPDATE");
         showButton = new JButton("SHOW");
 
         jPanel.add(inputButton);
-        jPanel.add(deleteButton);
-        jPanel.add(updateButton);
         jPanel.add(showButton);
 
         InsertListener insertListener = new InsertListener();
         inputButton.addActionListener(insertListener);
 
-        DeleteListener deleteListener = new DeleteListener();
-        deleteButton.addActionListener(deleteListener);
-
-        UpdateListener updateListener = new UpdateListener();
-        updateButton.addActionListener(updateListener);
-
         ShowListener showListener = new ShowListener();
         showButton.addActionListener(showListener);
 
-        setJMenuBar(menuBar);
+        MenuTable menuTable = new MenuTable();
+        jPanel.add(menuTable);
+
+        frame.setJMenuBar(menuBar);
         //setSize(300, 200);
-        pack();
-        setVisible(true);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }

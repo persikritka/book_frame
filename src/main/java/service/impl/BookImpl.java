@@ -48,6 +48,7 @@ public class BookImpl implements BookService {
         }
     }
 
+
     @Override
     public void insert(String title, String author, int idGenre) throws SQLException {
         String str = "insert into book(title, author, id_genre) values("+"'"
