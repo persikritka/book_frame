@@ -15,7 +15,7 @@ public class MenuTable extends JTable{
     public MenuTable(JPanel panel) throws SQLException {
         super();
         this.panel = panel;
-        ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
+        //ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
         bookService = new BookImpl();
 
         DefaultTableModel model = new DefaultTableModel();

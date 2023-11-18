@@ -1,9 +1,6 @@
 import createTable.MenuTable;
 import database.ConnectorToDatabase;
-import listener.DeleteListener;
-import listener.InsertListener;
-import listener.ShowListener;
-import listener.UpdateListener;
+import listener.*;
 import service.BookService;
 import service.impl.BookImpl;
 
@@ -46,6 +43,8 @@ public class Menu extends JFrame {
 
         MenuTable menuTable = new MenuTable(jPanel);
         jPanel.add(menuTable);
+        UpdateTableListener updateTableListener = new UpdateTableListener(jPanel, inputButton, showButton, updateTableJButton);
+        updateTableJButton.addActionListener(updateTableListener);
 
         frame.setJMenuBar(menuBar);
         frame.pack();
