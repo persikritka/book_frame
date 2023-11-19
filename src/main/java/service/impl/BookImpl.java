@@ -49,8 +49,11 @@ public class BookImpl implements BookService {
     }
 
     @Override
-    public ResultSet getID(String title) throws SQLException {
-        ResultSet id = connectorToDatabase.getStatement().executeQuery("SELECT id FROM book WHERE title = '" + title + "'");
+    public int getID(String title) throws SQLException {
+        ResultSet idRS = connectorToDatabase.getStatement().executeQuery("SELECT id FROM book WHERE title = '" + title + "'");
+       int id = 0;
+        if(idRS.next())
+           id = Integer.parseInt(idRS.getString("id"));
         return id;
     }
 

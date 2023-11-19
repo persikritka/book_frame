@@ -56,9 +56,8 @@ public class UpdateListener implements ActionListener {
         int idGenreInt = 0;
         String idGenreStr = null;
         try {
-            ResultSet idGenreRS = genreService.getGenre(genre);
-            if(idGenreRS.next())
-                idGenreStr = idGenreRS.getString("id");
+            idGenreInt = genreService.getGenre(genre);
+            idGenreStr = "" + idGenreInt;
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -89,15 +88,9 @@ public class UpdateListener implements ActionListener {
                 int idGenre = Integer.parseInt(idGenreField.getText());
 
                 try {
-                    ResultSet rs = bookService.getID(title);
-                    int idBook = 0;
-                    if(rs.next())
-                        idBook = Integer.parseInt(rs.getString("id"));
+                    int idBook = bookService.getID(title);
                     bookService.update(idBook, title, author, idGenre);
-                    ResultSet resultSet = informationService.getID(idBook);
-                    int idInformation = 0;
-                    if(resultSet.next())
-                        idInformation = Integer.parseInt(resultSet.getString("id"));
+                    int idInformation = informationService.getID(idBook);
                     informationService.update(idInformation, idBook, cost, circulation);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);

@@ -27,11 +27,8 @@ public class DeleteListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String title = jTable.getValueAt(jTable.getSelectedRow(), 0).toString();
         BookService bookService = new BookImpl();
-        int idBook = 0;
         try {
-            ResultSet idRS = bookService.getID(title);
-            if(idRS.next())
-                idBook = Integer.parseInt(idRS.getString("id"));
+            int idBook = bookService.getID(title);
             bookService.delete(idBook);
             panel.removeAll();
             panel.add(insertButton);

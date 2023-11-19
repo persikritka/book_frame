@@ -3,8 +3,10 @@ package listener;
 import createTable.MenuTable;
 import database.ConnectorToDatabase;
 import service.BookService;
+import service.GenreService;
 import service.InformationService;
 import service.impl.BookImpl;
+import service.impl.GenreImpl;
 import service.impl.InformationImpl;
 import tables.newTable.CreateNewTables;
 
@@ -46,10 +48,10 @@ public class InsertListener implements ActionListener {
         dialog.add(authorLabel);
         dialog.add(authorField);
 
-        JLabel idGenreLabel = new JLabel("ID genre");
-        JTextField idGenreField = new JTextField(10);
-        dialog.add(idGenreLabel);
-        dialog.add(idGenreField);
+        JLabel genreLabel = new JLabel("Genre");
+        JTextField genreField = new JTextField(10);
+        dialog.add(genreLabel);
+        dialog.add(genreField);
 
         JLabel costLabel = new JLabel("Cost");
         JTextField costField = new JTextField(10);
@@ -68,19 +70,23 @@ public class InsertListener implements ActionListener {
 
         BookService bookService = new BookImpl();
         InformationService informationService = new InformationImpl();
+        GenreService genreService = new GenreImpl();
         btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String title = titleField.getText();
                 String author = authorField.getText();
                 int cost = Integer.parseInt(costField.getText());
                 int circulation = Integer.parseInt(circulationField.getText());
-                int idGenre = Integer.parseInt(idGenreField.getText());
+                String genre = genreField.getText();
+                int idGenre = 0;
+                try {
+                    idGenre = genreService.getGenre(genre);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 try {
                     bookService.insert(title, author, idGenre);
-                    ResultSet rs = bookService.getID(title);
-                    int idBook = 0;
-                    if(rs.next())
-                        idBook = Integer.parseInt(rs.getString("id"));
+                    int idBook = bookService.getID(title);
                     informationService.insert(idBook, cost, circulation);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);

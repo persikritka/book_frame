@@ -21,8 +21,11 @@ public class InformationImpl implements InformationService {
     }
 
     @Override
-    public ResultSet getID(int idBook) throws SQLException {
-        ResultSet id = connectorToDatabase.getStatement().executeQuery("SELECT id FROM information WHERE id_book = '" + idBook + "'");
+    public int getID(int idBook) throws SQLException {
+        ResultSet idRS = connectorToDatabase.getStatement().executeQuery("SELECT id FROM information WHERE id_book = '" + idBook + "'");
+        int id = 0;
+        if(idRS.next())
+            id = Integer.parseInt(idRS.getString("id"));
         return id;
     }
 
