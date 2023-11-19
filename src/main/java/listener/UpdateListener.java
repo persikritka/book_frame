@@ -51,19 +51,11 @@ public class UpdateListener implements ActionListener {
         BookService bookService = new BookImpl();
         InformationService informationService = new InformationImpl();
 
-        JLabel idGenreLabel = new JLabel("ID genre");
+        JLabel genreLabel = new JLabel("Genre");
         String genre = jTable.getValueAt(jTable.getSelectedRow(), 2).toString();
-        int idGenreInt = 0;
-        String idGenreStr = null;
-        try {
-            idGenreInt = genreService.getGenre(genre);
-            idGenreStr = "" + idGenreInt;
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-        JTextField idGenreField = new JTextField(idGenreStr,10);
-        dialog.add(idGenreLabel);
-        dialog.add(idGenreField);
+        JTextField genreField = new JTextField(genre,10);
+        dialog.add(genreLabel);
+        dialog.add(genreField);
 
         JLabel costLabel = new JLabel("Cost");
         String cost = jTable.getValueAt(jTable.getSelectedRow(), 3).toString();
@@ -81,17 +73,17 @@ public class UpdateListener implements ActionListener {
 
         btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String title = titleField.getText();
-                String author = authorField.getText();
-                int cost = Integer.parseInt(costField.getText());
-                int circulation = Integer.parseInt(circulationField.getText());
-                int idGenre = Integer.parseInt(idGenreField.getText());
-
+                String titleNew = titleField.getText();
+                String authorNew = authorField.getText();
+                int costNew = Integer.parseInt(costField.getText());
+                int circulationNew = Integer.parseInt(circulationField.getText());
+                String genreNew = genreField.getText();
                 try {
                     int idBook = bookService.getID(title);
-                    bookService.update(idBook, title, author, idGenre);
+                    int idGenre = genreService.getGenre(genreNew);
+                    bookService.update(idBook, titleNew, authorNew, idGenre);
                     int idInformation = informationService.getID(idBook);
-                    informationService.update(idInformation, idBook, cost, circulation);
+                    informationService.update(idInformation, idBook, costNew, circulationNew);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -107,6 +99,7 @@ public class UpdateListener implements ActionListener {
                     throw new RuntimeException(ex);
                 }
                 panel.add(menuTable);
+                panel.revalidate();
                 dialog.setVisible(false);
             }
         });

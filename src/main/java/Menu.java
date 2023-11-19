@@ -25,6 +25,7 @@ public class Menu extends JFrame {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         JMenuBar menuBar = new JMenuBar();
         JFrame frame = new JFrame();
+        //frame.revalidate();
         jPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         frame.add(jPanel);
         inputButton = new JButton("INSERT");
@@ -43,8 +44,10 @@ public class Menu extends JFrame {
 
         MenuTable menuTable = new MenuTable(jPanel, inputButton, showButton, updateTableJButton);
         jPanel.add(menuTable);
+        frame.revalidate();
         UpdateTableListener updateTableListener = new UpdateTableListener(jPanel, inputButton, showButton, updateTableJButton);
         updateTableJButton.addActionListener(updateTableListener);
+        frame.revalidate();
 
         frame.setJMenuBar(menuBar);
         frame.pack();

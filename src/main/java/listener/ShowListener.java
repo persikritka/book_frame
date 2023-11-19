@@ -31,7 +31,7 @@ public class ShowListener implements ActionListener {
         GenreService genreService = new GenreImpl();
         InformationService informationService = new InformationImpl();
         ShowTablesListener showTablesListener = new ShowTablesListener(comboBox, items, dialog);
-       /* ActionListener showTableListener = new ActionListener() {
+        ActionListener showTableListener = new ActionListener() {
             JScrollPane scrollBook;
             JScrollPane scrollGenre;
             JScrollPane scrollInformation;
@@ -73,7 +73,7 @@ public class ShowListener implements ActionListener {
                     try {
                         ResultSet rs = bookService.getAllDataBook();
                         int i = 0;
-                        if (rs.next()) {
+                        while (rs.next()) {
                             title = rs.getString("title");
                             author = rs.getString("author");
                             idGenre = Integer.parseInt(rs.getString("id_genre"));
@@ -120,7 +120,7 @@ public class ShowListener implements ActionListener {
                     try {
                         ResultSet rs = genreService.getAllDataGenre();
                         int i = 0;
-                        if (rs.next()) {
+                        while (rs.next()) {
                             genre = rs.getString("genre");
                             model.addRow(new Object[]{genre});
                             i++;
@@ -166,7 +166,7 @@ public class ShowListener implements ActionListener {
                     try {
                         ResultSet rs = informationService.getAllDataInformation();
                         int i = 0;
-                        if (rs.next()) {
+                        while (rs.next()) {
                             idBook = Integer.parseInt(rs.getString("id_book"));
                             cost = Integer.parseInt(rs.getString("cost"));
                             circulation = Integer.parseInt(rs.getString("circulation"));
@@ -215,7 +215,7 @@ public class ShowListener implements ActionListener {
                     try {
                         ResultSet rs = bookService.getAllDataBookGenre();
                         int i = 0;
-                        if (rs.next()) {
+                        while (rs.next()) {
                             title = rs.getString("title");
                             author = rs.getString("author");
                             idGenre = Integer.parseInt(rs.getString("id_genre"));
@@ -269,7 +269,7 @@ public class ShowListener implements ActionListener {
                     try {
                         ResultSet rs = bookService.getAllDataBookInformation();
                         int i = 0;
-                        if (rs.next()) {
+                        while (rs.next()) {
                             title = rs.getString("title");
                             author = rs.getString("author");
                             idGenre = Integer.parseInt(rs.getString("id_genre"));
@@ -325,7 +325,7 @@ public class ShowListener implements ActionListener {
                     try {
                         ResultSet rs = bookService.getAllData();
                         int i = 0;
-                        if (rs.next()) {
+                        while (rs.next()) {
                             title = rs.getString("title");
                             author = rs.getString("author");
                             idGenre = Integer.parseInt(rs.getString("id_genre"));
@@ -346,7 +346,7 @@ public class ShowListener implements ActionListener {
                     dialog.pack();
                 }
             }
-        };*/
+        };
 
         comboBox.addActionListener(showTablesListener);
 
