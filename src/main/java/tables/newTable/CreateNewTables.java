@@ -79,7 +79,6 @@ public class CreateNewTables {
                 }
             }
 
-
             BookService bookService = new BookImpl();
             DefaultTableModel model = new DefaultTableModel();
             String[] columnNames = {"Title", "Author", "Genre", "Cost", "Circulation"};
@@ -93,7 +92,6 @@ public class CreateNewTables {
                     JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             scrollBook.setVerticalScrollBarPolicy(
                     JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            //from = (String) c1.getSelectedItem();
             String title = "";
             String author = "";
             String genre;

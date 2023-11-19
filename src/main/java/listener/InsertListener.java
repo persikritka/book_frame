@@ -102,6 +102,7 @@ public class InsertListener implements ActionListener {
                     throw new RuntimeException(ex);
                 }
                 panel.add(menuTable);
+                panel.revalidate();
                 dialog.setVisible(false);
             }
         });

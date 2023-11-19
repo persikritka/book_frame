@@ -34,10 +34,7 @@ public class ShowTablesListener implements ActionListener {
         InformationService informationService = new InformationImpl();
         GenreService genreService = new GenreImpl();
 
-            //comboBox = new JComboBox(items);
-            String selectedItem = comboBox.getSelectedItem().toString();
-
-            if (/*comboBox.getSelectedItem().equals("Book table")*/selectedItem.equals("Book table")) {
+            if (comboBox.getSelectedItem().equals("Book table")) {
                 if (scrollBook != null)
                     dialog.remove(scrollBook);
                 if (scrollGenre != null)
@@ -64,8 +61,6 @@ public class ShowTablesListener implements ActionListener {
                         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                 String title = "";
                 String author = "";
-                int idGenre;
-
                 try {
                     ResultSet rs = bookService.getAllDataBook();
                     int i = 0;
@@ -110,7 +105,6 @@ public class ShowTablesListener implements ActionListener {
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 scrollGenre.setVerticalScrollBarPolicy(
                         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                //from = (String) c1.getSelectedItem();
                 String genre = "";
                 try {
                     ResultSet rs = genreService.getAllDataGenre();
@@ -302,7 +296,6 @@ public class ShowTablesListener implements ActionListener {
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 scrollAll.setVerticalScrollBarPolicy(
                         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                //from = (String) c1.getSelectedItem();
                 String title = "";
                 String author = "";
                 String genre = "";
