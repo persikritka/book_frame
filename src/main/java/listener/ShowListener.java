@@ -26,10 +26,6 @@ public class ShowListener implements ActionListener {
         };
         JComboBox comboBox = new JComboBox(items);
         dialog.add(comboBox);
-        ConnectorToDatabase connectorToDatabase = new ConnectorToDatabase();
-        BookService bookService = new BookImpl();
-        GenreService genreService = new GenreImpl();
-        InformationService informationService = new InformationImpl();
         ShowTablesListener showTablesListener = new ShowTablesListener(comboBox, items, dialog);
 
         comboBox.addActionListener(showTablesListener);
